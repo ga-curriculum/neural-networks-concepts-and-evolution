@@ -1,4 +1,4 @@
-# Foundations in Python and Git for AI
+# Neural Networks: Concepts and Evolution
 
 **Session Time:** 120 minutes
 
