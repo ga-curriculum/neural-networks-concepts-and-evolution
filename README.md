@@ -5,41 +5,44 @@
 ---
 ## Table of Contents 
 
-1. Introduction to Python for AI  
-2. Setting Up the Development Environment  
-3. Python Essentials for Machine Learning  
-4. Data Handling and Libraries  
-5. Introduction to Git and Version Control  
-6. Working with GitHub  
-7. Lab: Baseline Builder – Logistic Regression (Setup)  
-8. Wrap-Up and Reflection  
+1. Introduction to Neural Networks  
+2. The Evolution of Neural Networks  
+3. Anatomy of a Neural Network  
+4. Activation Functions  
+5. Forward and Backpropagation  
+6. Loss Functions and Optimization  
+7. Neural Networks in Action (PyTorch Implementation)  
+8. Lab: From Linear to Neural — Building a Simple Feedforward Network  
+9. Wrap-Up and Reflection  
+10. Resources   
 
 ---
 
 ## Learning Objectives
 
 By the end of this module, you'll be able to:
-1. Configure and validate a Python environment for AI development.  
-2. Use Jupyter Notebooks for iterative and reproducible data workflows.  
-3. Apply Python fundamentals to manipulate data and build a baseline ML model.  
-4. Utilize Git and GitHub for version control, collaboration, and portfolio building.  
-5. Document code and share projects effectively in preparation for later modules
-
+1. Explain what a neural network is and how it models human brain-inspired computation.
+2. Trace the historical evolution of neural networks from perceptrons to modern deep learning architectures.
+3. Understand the structure and functioning of layers, neurons, and activation functions.
+4. Describe how forward propagation, loss functions, and backpropagation work together to train a model.
+5. Build, train, and evaluate a simple feedforward neural network using **PyTorch**.
+6. Compare the performance of a neural network to a traditional machine learning model (e.g., logistic regression).
 ---
 
 ## Session Breakdown
 
 | Segment | Topic | Duration |
 |----------|--------|----------|
-| 1 | Introduction to Course + Icebreaker | 10 min |
-| 2 | Introduction to Python for AI | 15 min |
-| 3 | Setting Up the Development Environment | 15 min |
-| 4 | Python Essentials for Machine Learning | 20 min |
-| 5 | Data Handling and Libraries | 20 min |
-| 6 | Introduction to Git and Version Control | 15 min |
-| 7 | Working with GitHub | 10 min |
-| 8 | Lab: Baseline Builder – Logistic Regression (Setup) | 10 min |
+| 1 | Introduction to Neural Networks | 10 min |
+| 2 | The Evolution of Neural Networks | 10 min |
+| 3 | Anatomy of a Neural Network | 15 min |
+| 4 | Activation Functions | 10 min |
+| 5 | Forward and Backpropagation | 20 min |
+| 6 | Loss Functions and Optimization | 10 min |
+| 7 | Neural Networks in Action (PyTorch Implementation) | 25 min |
+| 8 | Lab: From Linear to Neural | 15 min |
 | 9 | Wrap-Up and Reflection | 5 min |
+
 ---
 
 ## 1. Introduction to Python for AI (15 min)
