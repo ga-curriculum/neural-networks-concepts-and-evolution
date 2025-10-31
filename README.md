@@ -45,81 +45,53 @@ By the end of this module, you'll be able to:
 
 ---
 
-## 1. Introduction to Python for AI (15 min)
+### 1. Introduction to Neural Networks (10 min)
 
-Python is the **lingua franca of artificial intelligence and deep learning** due to its simplicity, readability, and powerful ecosystem of libraries.
+Neural Networks (NNs) are computational models inspired by the human brain. They are designed to recognize complex patterns through interconnected nodes (neurons) that process input data and make predictions.
 
-| Concept | Description | Example |
-|----------|--------------|----------|
-| High-level language | Easy-to-read syntax, close to English | `print("Hello AI!")` |
-| Interpreted | No compilation needed | Run directly in terminal or Jupyter |
-| Versatile | Used in AI, web dev, automation | TensorFlow, Flask, Pandas |
+**Simple Analogy:**  
+Just as our brains learn by strengthening certain neural connections, artificial neural networks adjust their internal weights based on errors during training.
 
-**Example: Basic Python Syntax**
+**Diagram:**  
+![Simple Neural Network](https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Artificial_neural_network.svg/800px-Artificial_neural_network.svg.png)
 
-```python
-# Variables and types
-name = "AI Learner"
-hours = 32
-print(f"Welcome {name}, to {hours} hours of AI training!")
-```
 ---
 
-## 3. Setting Up the Development Environment (15 min)
+### 2. The Evolution of Neural Networks
 
-Ensure all required tools are installed and verified.
+| Era | Key Concept | Innovation | Example |
+|------|--------------|-------------|----------|
+| **1950s–60s** | Perceptron | Single-layer binary classifier | Rosenblatt’s Perceptron |
+| **1980s** | Backpropagation | Multi-layer learning | Feedforward Networks |
+| **2000s** | Deep Learning | Multi-layer networks + GPUs | CNNs, RNNs |
+| **2010s–2020s** | Modern AI | Transformers, LLMs | GPT, BERT |
 
-✅ Required Tools
+**Discussion Prompt:**  
+Ask learners: “Why did neural networks decline in the 1970s and return to prominence decades later?”
 
-✅Python 3.9+
+(Hint: computation power, data availability, and better algorithms.)
 
-✅Jupyter Notebooks or VS Code
-
-✅Git and GitHub account
-
-✅Key Libraries: NumPy, Pandas, Matplotlib, Scikit-learn, PyTorch
-
-✅Zoom, Slack, and Chrome (for course delivery)
-
- **Sanity Check**
-
-Run these commands to confirm setup:
-```python --version
-jupyter --version
-git --version
-pip list
-```
-Activity:
-Learners open Jupyter, create a new notebook titled "Module1_Setup.ipynb", and run:
-```
-import numpy, pandas, sklearn
-print("✅ Environment setup complete!")
-```
 ---
 
-## 4. Python Essentials for Machine Learning (20 min)
-**Key Topics**
-1. Variables, data types, lists, dictionaries, and loops
-2. Writing and calling functions
-3. Handling exceptions and debugging
+### 3. Anatomy of a Neural Network
 
-**Example:**
-```
-def normalize(data):
-    """Return normalized values between 0 and 1."""
-    return (data - data.min()) / (data.max() - data.min())
+A **neural network** consists of:
+- **Input Layer:** Receives data (e.g., image pixels, text embeddings).  
+- **Hidden Layers:** Extracts patterns through weighted connections.  
+- **Output Layer:** Produces final predictions.
 
-import pandas as pd
-scores = pd.Series([10, 15, 20, 25])
-print(normalize(scores))
-```
+**Mathematical Representation:**
+\[
+y = f(Wx + b)
+\]
+Where:
+- \( W \) = weights  
+- \( b \) = bias  
+- \( f \) = activation function  
 
-**Mini Exercise:**
-Write a function that squares each number in a list and returns the new list.
-```
-numbers = [2, 4, 6]
-# Output: [4, 16, 36]
-```
+**Visual Representation:**
+![Neural Network Layers](https://miro.medium.com/v2/resize:fit:1200/1*oY5D6oajm2M7YgB1h3bN5A.png)
+
 ---
 ## 5. Data Handling and Libraries (20 min)
 
