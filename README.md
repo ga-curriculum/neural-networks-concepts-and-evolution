@@ -212,13 +212,40 @@ for epoch in range(1000):
 print("Final Loss:", loss.item())
 ```
 ---
+### 8. Lab: From Linear to Neural — Building a Simple Feedforward Network
+
+**Objective:**  
+Transform a logistic regression model into a neural network and compare performance.
+
+**Activities:**
+1. Revisit the logistic regression baseline from Module 2.  
+2. Build a one-hidden-layer neural network using PyTorch.  
+3. Visualize training loss over iterations.  
+4. Evaluate model accuracy and discuss results.  
+
+**Extension Idea:**  
+Add one more hidden layer and observe how the model performance changes.
+
+---
+
+## Wrap-Up and Reflection
+
+**Reflection Prompts:**
+1. How do neural networks differ fundamentally from traditional ML models?  
+2. What role do activation functions and backpropagation play in learning?  
+3. How did adding hidden layers affect performance?  
+4. How might this knowledge prepare you for CNNs and more advanced architectures?
+
+**Instructor Tip:**  
+Encourage learners to summarize today’s model in their GitHub notebooks and experiment with additional activation functions at home.
+
+---
 
 ## Resources 
-- [Python Official Docs](https://docs.python.org/3/)  
-- [NumPy Quickstart](https://numpy.org/doc/stable/user/quickstart.html)  
-- [Pandas Documentation](https://pandas.pydata.org/docs/)  
-- [Matplotlib Tutorials](https://matplotlib.org/stable/tutorials/)  
-- [Scikit-learn User Guide](https://scikit-learn.org/stable/user_guide.html)  
-- [Git Documentation](https://git-scm.com/doc)  
-- [GitHub Guides](https://guides.github.com/)  
-- [General Assembly Student Setup Guide](https://generalassemb.ly)
+- [PyTorch Documentation](https://pytorch.org/docs/stable/index.html)  
+- [Neural Networks and Deep Learning (Michael Nielsen Book)](http://neuralnetworksanddeeplearning.com/)  
+- [3Blue1Brown — Neural Networks Playlist](https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr)  
+- [CS231n: Neural Networks Notes (Stanford)](http://cs231n.github.io/neural-networks-1/)  
+- [Activation Functions Explained (Towards Data Science)](https://towardsdatascience.com/activation-functions-neural-networks-1cbd9f8d91d6)  
+- [Deep Learning Book (Goodfellow et al.)](https://www.deeplearningbook.org/)  
+- [Visualizing Backpropagation](https://colah.github.io/posts/2015-08-Backprop/)
