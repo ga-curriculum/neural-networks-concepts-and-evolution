@@ -93,108 +93,124 @@ Where:
 ![Neural Network Layers](https://miro.medium.com/v2/resize:fit:1200/1*oY5D6oajm2M7YgB1h3bN5A.png)
 
 ---
-## 5. Data Handling and Libraries (20 min)
 
-**Focus:** Core libraries for AI and ML workflows.
+### 4. Activation Functions
 
-| Library | Purpose | Example |
-|----------|----------|----------|
-| **NumPy** | Numerical computation | `np.mean(arr)` |
-| **Pandas** | Data manipulation | `df.describe()` |
-| **Matplotlib** | Visualization | `plt.plot()` |
+Activation functions introduce non-linearity, allowing networks to learn complex relationships.
 
-**Follow-Along Code:**
+| Function | Formula | Use Case | Visualization |
+|-----------|----------|----------|----------------|
+| **Sigmoid** | \( f(x) = \frac{1}{1 + e^{-x}} \) | Binary classification | S-shaped curve |
+| **ReLU** | \( f(x) = \max(0, x) \) | Deep networks | Fast and efficient |
+| **Tanh** | \( f(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}} \) | Normalized output | Zero-centered |
+| **Softmax** | \( f(x_i) = \frac{e^{x_i}}{\sum_j e^{x_j}} \) | Multi-class classification | Probabilities sum to 1 |
+
+**Code Example:**
+
 ```python
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
+import torch
+import torch.nn.functional as F
 
-data = np.random.randn(100)
-df = pd.DataFrame({'values': data})
-plt.hist(df['values'], bins=20)
-plt.title("Random Data Distribution")
-plt.show()
-Copy code
+x = torch.tensor([-1.0, 0.0, 1.0])
+print("Sigmoid:", torch.sigmoid(x))
+print("ReLU:", F.relu(x))
+print("Tanh:", torch.tanh(x))
 ```
----
-## 6. Introduction to Git and Version Control (15 min)
-
-Version control helps track changes, collaborate, and revert errors efficiently.
-
-**Key Commands**
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-```
-**Concepts:**
-
-1.Repository: Project folder with version history
-
-2.Commit: Snapshot of code changes
-
-3.Branch: Separate workspace for experiments
-
----
-## 7. Working with GitHub (10 min)
-
-**Connecting to GitHub**
-```git remote add origin https://github.com/username/repo.git
-git push -u origin main
-```
-
-**Branching Workflow Example**
-```git checkout -b feature-branch
-# Work on code
-git commit -am "Added data visualization section"
-git checkout main
-git merge feature-branch
-```
-
-**In-Class Collaboration Activity:**
-
-Students pair up and fork a practice repository to make and merge changes.
 
 ---
 
-## 8. Lab: Baseline Builder – Logistic Regression (Setup) (10 min)
+### 5. Forward and Backpropagation
 
-**Objective:** Implement your first ML model using Scikit-learn.
+**Forward Propagation:**  
+The process of passing input data through the network to produce an output.
 
-```from sklearn.datasets import load_digits
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+**Backpropagation:**  
+The process of updating weights by calculating the gradient of the loss function.
 
+**Formula for Weight Update:**
+\[
+w_{new} = w_{old} - \eta \cdot \frac{\partial L}{\partial w}
+\]
+Where:
+- \( \eta \) = learning rate  
+- \( L \) = loss function  
 
-X, y = load_digits(return_X_y=True)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-model = LogisticRegression(max_iter=1000)
-model.fit(X_train, y_train)
+**Visualization:**
+![Backpropagation Process](https://upload.wikimedia.org/wikipedia/commons/8/8c/Backpropagation_of_error.svg)
 
-pred = model.predict(X_test)
-print("Baseline Accuracy:", accuracy_score(y_test, pred))
+**Interactive Concept:**  
+Ask learners: “What happens if the learning rate is too high or too low?”
+
+---
+
+### 6. Loss Functions and Optimization
+
+**Loss Function:** Measures how far predictions are from actual values.  
+**Optimizer:** Algorithm that adjusts weights to minimize loss.
+
+| Task | Common Loss | Optimizer |
+|------|--------------|------------|
+| Binary Classification | Binary Cross-Entropy | SGD, Adam |
+| Multi-Class Classification | Categorical Cross-Entropy | Adam |
+| Regression | Mean Squared Error | RMSProp, Adam |
+
+**Code Example:**
+
+```python
+import torch
+import torch.nn as nn
+
+loss_fn = nn.BCELoss()  # Binary Cross Entropy
+optimizer = torch.optim.Adam(params=model.parameters(), lr=0.001)
 ```
-
-
-**Discussion:**
-
-1. What does the model learn?
-2. How can we improve this baseline in later modules (hint: neural networks)?
 
 ---
    
-## 9. Wrap-Up and Reflection (5 min)
+### 7. Neural Networks in Action (PyTorch Implementation)
 
-**Group Discussion:**
-1. What challenges did you face while setting up your environment?
-2. Which Python concept felt most familiar or new to you?
-3. How does Git enhance collaboration in AI projects?
+**Build a simple feedforward network using PyTorch**
 
-**Instructor Notes:**
-1. Reiterate learning outcomes achieved.
-2. Preview next module: Deep Learning with PyTorch.
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from sklearn.datasets import make_moons
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
+# Generate sample data
+X, y = make_moons(n_samples=1000, noise=0.2, random_state=42)
+scaler = StandardScaler()
+X = scaler.fit_transform(X)
+X = torch.FloatTensor(X)
+y = torch.FloatTensor(y).view(-1, 1)
+
+# Define model
+class SimpleNN(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.fc1 = nn.Linear(2, 8)
+        self.fc2 = nn.Linear(8, 1)
+    
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = torch.sigmoid(self.fc2(x))
+        return x
+
+model = SimpleNN()
+criterion = nn.BCELoss()
+optimizer = optim.Adam(model.parameters(), lr=0.01)
+
+# Train
+for epoch in range(1000):
+    optimizer.zero_grad()
+    outputs = model(X)
+    loss = criterion(outputs, y)
+    loss.backward()
+    optimizer.step()
+
+print("Final Loss:", loss.item())
+```
 ---
 
 ## Resources 
