@@ -229,11 +229,6 @@ Neural Networks unlock powerful capabilities but come with complexity.
 
 ## 3. Anatomy of a Neural Network (Detailed Process)
 
-<h1>
-  <span class="headline">Intro to Neural Networks + Overview of AI Architectures </span>
-  <span class="subhead">Introduction to Neural Networks</span>
-</h1>
-
 ## **Lesson Objectives**
 
 By the end of this lesson, students will be able to:
