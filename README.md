@@ -5,14 +5,13 @@
 ---
 ## Table of Contents
 
-1. Why Neural Networks? The Need for Deep Learning
-2. Introduction to PyTorch
-3. Advantages and Tradeoffs of Neural Networks
-4. Anatomy of a Neural Network (Detailed)
-5. The Training Process: Forward and Backpropagation
-6. Lab: Building a Simple Feedforward Network (PyTorch)
-7. Wrap-Up and Reflection
-8. Resources
+1. Introduction to Neural Networks
+2. Advantages and Tradeoffs of Neural Networks
+3. Anatomy of a Neural Network (Detailed)
+4. The Training Process: Forward and Backpropagation
+5. Lab: Building a Simple Feedforward Network (PyTorch)
+6. Wrap-Up and Reflection
+7. Resources
 
 ---
 
@@ -32,7 +31,7 @@ By the end of this module, participants will be able to:
 
 | Segment | Topic | Duration (minutes) |
 |---|---|---|
-| 1 | The "Why" of Neural Networks & PyTorch Intro | 15 |
+| 1 | The "Why" of Neural Networks | 15 |
 | 2 | Advantages and Tradeoffs (High Power, Low Interpretability) | 10 |
 | 3 | Anatomy of a Neural Network (Detailed Process) | 20 |
 | 4 | The Training Process: Forward and Backpropagation | 15 |
@@ -41,23 +40,183 @@ By the end of this module, participants will be able to:
 
 ---
 
-### 1. Why Neural Networks? The Need for Deep Learning
+## 1. Why Neural Networks? The Need for Deep Learning
 
-#### The Challenge for Classical ML
+### **Lesson Objectives**
 
-Classical models like Logistic Regression or Random Forests struggle when faced with high-dimensional, unstructured data, such as images, raw audio, or text. They require extensive **Feature Engineering**—manually defining every pattern for the model to learn.
+By the end of this lesson, students will be able to:
 
-**Example Use Case: Neural Networks Solve Complex Patterns**
+- Understand the fundamental structure of a neural network.
+- Explain how neural networks learn from data.
+- Identify why data quality is critical for AI model performance.
+- Recognize common data-related issues that impact neural networks (bias, noise, augmentation, and synthetic data).
 
-* **Image Recognition:** Classical ML would need human-defined features like "edge detector" or "corner detector." A Neural Network automatically learns these features (hierarchically, from simple edges to complex object parts) directly from the raw pixel data.
+---
 
-* **The Path to Generative AI:** The ability of Neural Networks (specifically, the Transformer architecture) to process sequential data and learn complex, distributed representations is the fundamental stepping stone to modern Generative AI models (like Gemini, GPT, or DALL-E) that create novel content.
+### **What is a Neural Network?**
 
-#### Introduction to PyTorch
+Neural networks are a type of machine learning model inspired by the human brain. They consist of interconnected layers of artificial neurons that process input data to identify patterns and make predictions.
 
-PyTorch is a widely used, open-source machine learning framework developed by Facebook's AI Research lab (FAIR).
+### **Basic Components of a Neural Network**
 
-* **Key Feature:** Its core strength is its **dynamic computation graph**, which allows for faster prototyping and more flexible model development, particularly popular in academic research and advanced applications.
+```mermaid
+graph TD;
+    A[Input Layer] --> B[Hidden Layer 1];
+    B --> C[Hidden Layer 2];
+    C --> D[Output Layer];
+```
+
+**Key Elements:**
+
+- **Neurons (Nodes):** Process input values and pass information forward.
+- **Layers:**
+  - **Input Layer**: Accepts raw data.
+  - **Hidden Layers**: Perform computations and transformations.
+  - **Output Layer**: Produces predictions or classifications.
+- **Weights & Biases:** Adjust to minimize error during training.
+- **Activation Functions:** Determine neuron firing (e.g., ReLU, Sigmoid, Softmax).
+
+### **How Neural Networks Learn**
+
+```mermaid
+sequenceDiagram
+    participant Input as Input Data
+    participant NN as Neural Network
+    participant Loss as Loss Function
+    participant Optimizer as Optimizer (Backpropagation)
+    Input ->> NN: Forward Propagation
+    NN ->> Loss: Compute Error
+    Loss ->> Optimizer: Adjust Weights
+    Optimizer ->> NN: Update Parameters
+```
+
+> **Key Takeaway:** Neural networks **learn from data**, and the quality of that data directly affects their ability to generalize and make accurate predictions.
+
+---
+
+## **Importance of Data Quality in Neural Networks**
+
+Neural networks rely on data to learn patterns and make predictions. Poor data quality can lead to **overfitting, bias, and poor generalization** to real-world scenarios.
+
+### **Key Factors Affecting Data Quality**
+
+```mermaid
+pie
+    title Data Quality Factors
+    "Data Size & Diversity" : 25
+    "Labeling Quality" : 20
+    "Bias in Data" : 20
+    "Noise & Outliers" : 15
+    "Synthetic Data & Augmentation" : 20
+```
+
+**Data Size & Diversity:** Avoids overfitting, ensures generalization.
+
+**Labeling Quality:** Inaccurate labels introduce noise and reduce model accuracy.
+
+**Bias in Data:** Reinforces discrimination in AI models.
+
+**Noise & Outliers:** Leads to unstable model predictions.
+
+**Synthetic Data & Augmentation:** Expands datasets to improve learning.
+
+> **Key Takeaway:** Even the most advanced neural network cannot compensate for poor-quality data. **High-quality, diverse, and well-labeled datasets are critical for robust AI models.**
+
+---
+
+## **Guided Walkthrough: Understanding Data Quality in Neural Networks**
+
+In this guided walkthrough, follow along as your instrcutor talks through the different aspects of the code. You can also code along during the walkthrough and execute the code in your notebook for this lesson.
+
+#### **Walkthrough Steps:**
+
+1.  The instructor will introduce the Python script, explaining its key components:
+
+    - Generating synthetic datasets with different data quality issues.
+
+    - Training a neural network using TensorFlow/Keras.
+
+    - Evaluating how accuracy changes based on dataset quality.
+
+2.  As the instructor runs the script, be sure to pay close attention to the following:
+
+    - How noise, imbalance, and missing labels affect model accuracy.
+
+    - Why data quality is as important as model architecture.
+
+3.  Be prepared to discuss the reflection questions with the class once the walkthrough is complete!
+
+#### **Python Code:**
+
+```python
+import numpy as np
+import tensorflow as tf
+from tensorflow import keras
+from sklearn.model_selection import train_test_split
+
+# Generate synthetic dataset
+def generate_data(size, noise_level=0, missing_labels=False):
+    X = np.random.rand(size, 10)
+    y = (X.sum(axis=1) > 5).astype(int)
+
+    # Add noise
+    if noise_level > 0:
+        X += np.random.normal(0, noise_level, X.shape)
+
+    # Remove labels
+    if missing_labels:
+        y[:int(size * 0.2)] = -1
+
+    return X, y
+
+# Create datasets
+X1, y1 = generate_data(5000)
+X2, y2 = generate_data(5000, noise_level=0.5)
+X3, y3 = generate_data(500, missing_labels=True)
+
+# Train a simple model on each dataset
+def train_model(X, y):
+    # Filter out samples with negative labels first
+    mask = y >= 0
+    X_filtered = X[mask]
+    y_filtered = y[mask]
+
+    # Now split the filtered data
+    X_train, X_test, y_train, y_test = train_test_split(X_filtered, y_filtered, test_size=0.2)
+
+    model = keras.Sequential([
+        keras.layers.Dense(32, activation='relu', input_shape=(10,)),
+        keras.layers.Dense(16, activation='relu'),
+        keras.layers.Dense(1, activation='sigmoid')
+    ])
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    model.fit(X_train, y_train, epochs=10, batch_size=32, verbose=0)
+    loss, acc = model.evaluate(X_test, y_test, verbose=0)
+    return acc
+
+# Evaluate models
+print("Dataset 1 Accuracy:", train_model(X1, y1))
+print("Dataset 2 Accuracy:", train_model(X2, y2))
+print("Dataset 3 Accuracy:", train_model(X3, y3))
+```
+
+#### **Reflection Questions:**
+
+- How did noise and missing labels affect model accuracy?
+- Which dataset produced the best-performing model, and why?
+- What techniques could improve the lower-performing models?
+- How does this reinforce the importance of data quality in AI development?
+
+---
+
+## **Summary & Key Takeaways**
+
+- Neural networks mimic the brain's structure and learn from **layered computations**.
+- **Data quality is as important as model architecture**---bias, noise, and poor labels degrade performance.
+- **AI models are only as good as the data they are trained on**---garbage in, garbage out.
+- Data augmentation and synthetic data can **enhance training** when used correctly.
+
+---
 
 ### 2. Advantages and Tradeoffs of Neural Networks
 
@@ -68,57 +227,191 @@ Neural Networks unlock powerful capabilities but come with complexity.
 | **Predictive Power** | **High Predictive Power:** Excels with large, complex, and unstructured data (images, sound, natural language). | **Resource Intensive:** Requires significant compute power (GPUs/TPUs) and large amounts of data for effective training. |
 | **Feature Learning** | **Automatic Feature Extraction:** Learns optimal features directly from the data hierarchy. | **Lower Interpretability (Black Box):** Hard to explain *why* the model made a specific prediction (due to millions of interconnected weights). |
 
-### 3. Anatomy of a Neural Network (Detailed Process)
+## 3. Anatomy of a Neural Network (Detailed Process)
 
-A basic Neural Network (the Feedforward Network) consists of layers of interconnected neurons.
+<h1>
+  <span class="headline">Intro to Neural Networks + Overview of AI Architectures </span>
+  <span class="subhead">Introduction to Neural Networks</span>
+</h1>
 
-1. **Input Layer:** Receives the raw data (e.g., house features, pixel values).
+## **Lesson Objectives**
 
-2. **Hidden Layers:** One or more layers that perform feature transformations. The more hidden layers, the "deeper" the network.
+By the end of this lesson, students will be able to:
 
-3. **Output Layer:** Produces the final result (e.g., a continuous price (Regression) or a probability (Classification)).
+- Understand the fundamental structure of a neural network.
+- Explain how neural networks learn from data.
+- Identify why data quality is critical for AI model performance.
+- Recognize common data-related issues that impact neural networks (bias, noise, augmentation, and synthetic data).
 
-#### The Neuron: The Core Unit
+---
 
-Each neuron performs two main steps:
+## **What is a Neural Network?**
 
-1. **Weighted Sum:** Multiplies each input by a corresponding **weight ($W$)**, sums them up, and adds a **bias ($b$)**.
-   $$Z = (W_1x_1 + W_2x_2 + \dots + W_nx_n) + b$$
+Neural networks are a type of machine learning model inspired by the human brain. They consist of interconnected layers of artificial neurons that process input data to identify patterns and make predictions.
 
-2. **Activation:** The result $Z$ is passed through an activation function (like ReLU or Sigmoid) to introduce **non-linearity**. This is essential, as stacking linear operations only results in another linear operation.
+### **Basic Components of a Neural Network**
 
-### 4. The Training Process: Forward and Backpropagation
+```mermaid
+graph TD;
+    A[Input Layer] --> B[Hidden Layer 1];
+    B --> C[Hidden Layer 2];
+    C --> D[Output Layer];
 
-NN training is a cyclical process of making a prediction and correcting the internal weights based on the error.
+```
 
-#### Step A: Forward Propagation (Prediction)
+**Key Elements:**
 
-1. Input data is fed into the network.
+- **Neurons (Nodes):** Process input values and pass information forward.
+- **Layers:**
+  - **Input Layer**: Accepts raw data.
+  - **Hidden Layers**: Perform computations and transformations.
+  - **Output Layer**: Produces predictions or classifications.
+- **Weights & Biases:** Adjust to minimize error during training.
+- **Activation Functions:** Determine neuron firing (e.g., ReLU, Sigmoid, Softmax).
 
-2. The data travels sequentially from the Input Layer, through all Hidden Layers, until it reaches the Output Layer.
+### **How Neural Networks Learn**
 
-3. Each layer performs its Weighted Sum and Activation steps.
+```mermaid
+sequenceDiagram
+    participant Input as Input Data
+    participant NN as Neural Network
+    participant Loss as Loss Function
+    participant Optimizer as Optimizer (Backpropagation)
+    Input ->> NN: Forward Propagation
+    NN ->> Loss: Compute Error
+    Loss ->> Optimizer: Adjust Weights
+    Optimizer ->> NN: Update Parameters
 
-4. The network produces a prediction ($\hat{y}$).
+```
 
-#### Step B: Loss Calculation
+> **Key Takeaway:** Neural networks **learn from data**, and the quality of that data directly affects their ability to generalize and make accurate predictions.
 
-1. A **Loss Function** (or Cost Function) calculates the difference (error) between the predicted value ($\hat{y}$) and the true label ($y$).
+---
 
-   * *Example:* Mean Squared Error (MSE) for Regression.
+## **Importance of Data Quality in Neural Networks**
 
-#### Step C: Backpropagation (Error Correction)
+Neural networks rely on data to learn patterns and make predictions. Poor data quality can lead to **overfitting, bias, and poor generalization** to real-world scenarios.
 
-1. The error calculated in Step B is propagated backward through the network, from the Output Layer to the Hidden Layers, and finally to the Input Layer.
+### **Key Factors Affecting Data Quality**
 
-2. Backpropagation uses the **chain rule of calculus** to determine exactly how much each weight in the network contributed to the final error.
+```mermaid
+pie
+    title Data Quality Factors
+    "Data Size & Diversity" : 25
+    "Labeling Quality" : 20
+    "Bias in Data" : 20
+    "Noise & Outliers" : 15
+    "Synthetic Data & Augmentation" : 20
 
-#### Step D: Weight Update (Optimization)
+```
 
-1. An **Optimizer** (e.g., Adam or SGD) uses the calculated error contributions (gradients) to adjust every weight in the network.
+**Data Size & Diversity:** Avoids overfitting, ensures generalization.
 
-2. The weights are updated to slightly reduce the loss for the next iteration. The size of this adjustment is controlled by the **Learning Rate**.
-   $$W_{new} = W_{old} - \text{Learning Rate} \times \frac{\partial L}{\partial W}$$
+**Labeling Quality:** Inaccurate labels introduce noise and reduce model accuracy.
+
+**Bias in Data:** Reinforces discrimination in AI models.
+
+**Noise & Outliers:** Leads to unstable model predictions.
+
+**Synthetic Data & Augmentation:** Expands datasets to improve learning.
+
+> **Key Takeaway:** Even the most advanced neural network cannot compensate for poor-quality data. **High-quality, diverse, and well-labeled datasets are critical for robust AI models.**
+
+---
+
+## **Guided Walkthrough: Understanding Data Quality in Neural Networks**
+
+In this guided walkthrough, follow along as your instrcutor talks through the different aspects of the code. You can also code along during the walkthrough and execute the code in your notebook for this lesson.
+
+#### **Walkthrough Steps:**
+
+1.  The instructor will introduce the Python script, explaining its key components:
+
+    - Generating synthetic datasets with different data quality issues.
+
+    - Training a neural network using TensorFlow/Keras.
+
+    - Evaluating how accuracy changes based on dataset quality.
+
+2.  As the instructor runs the script, be sure to pay close attention to the following:
+
+    - How noise, imbalance, and missing labels affect model accuracy.
+
+    - Why data quality is as important as model architecture.
+
+3.  Be prepared to discuss the reflection questions with the class once the walkthrough is complete!
+
+#### **Python Code:**
+
+```python
+import numpy as np
+import tensorflow as tf
+from tensorflow import keras
+from sklearn.model_selection import train_test_split
+
+# Generate synthetic dataset
+def generate_data(size, noise_level=0, missing_labels=False):
+    X = np.random.rand(size, 10)
+    y = (X.sum(axis=1) > 5).astype(int)
+
+    # Add noise
+    if noise_level > 0:
+        X += np.random.normal(0, noise_level, X.shape)
+
+    # Remove labels
+    if missing_labels:
+        y[:int(size * 0.2)] = -1
+
+    return X, y
+
+# Create datasets
+X1, y1 = generate_data(5000)
+X2, y2 = generate_data(5000, noise_level=0.5)
+X3, y3 = generate_data(500, missing_labels=True)
+
+# Train a simple model on each dataset
+def train_model(X, y):
+    # Filter out samples with negative labels first
+    mask = y >= 0
+    X_filtered = X[mask]
+    y_filtered = y[mask]
+
+    # Now split the filtered data
+    X_train, X_test, y_train, y_test = train_test_split(X_filtered, y_filtered, test_size=0.2)
+
+    model = keras.Sequential([
+        keras.layers.Dense(32, activation='relu', input_shape=(10,)),
+        keras.layers.Dense(16, activation='relu'),
+        keras.layers.Dense(1, activation='sigmoid')
+    ])
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    model.fit(X_train, y_train, epochs=10, batch_size=32, verbose=0)
+    loss, acc = model.evaluate(X_test, y_test, verbose=0)
+    return acc
+
+# Evaluate models
+print("Dataset 1 Accuracy:", train_model(X1, y1))
+print("Dataset 2 Accuracy:", train_model(X2, y2))
+print("Dataset 3 Accuracy:", train_model(X3, y3))
+```
+
+#### **Reflection Questions:**
+
+- How did noise and missing labels affect model accuracy?
+- Which dataset produced the best-performing model, and why?
+- What techniques could improve the lower-performing models?
+- How does this reinforce the importance of data quality in AI development?
+
+---
+
+## **Summary & Key Takeaways**
+
+- Neural networks mimic the brain's structure and learn from **layered computations**.
+- **Data quality is as important as model architecture**---bias, noise, and poor labels degrade performance.
+- **AI models are only as good as the data they are trained on**---garbage in, garbage out.
+- Data augmentation and synthetic data can **enhance training** when used correctly.
+
+---
 
 ### 5. Lab: Building a Simple Feedforward Network (PyTorch)
 
