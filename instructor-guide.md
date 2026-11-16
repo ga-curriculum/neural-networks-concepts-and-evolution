@@ -76,7 +76,7 @@ This module serves as the bridge between classical Machine Learning and Deep Lea
 
 **Purpose:** Replace logistic regression with a simple feedforward neural network using PyTorch.
 
-Refer: [Lab Instructor Guide](https://git.generalassemb.ly/applied-ai-and-deep-learning-in-action/Lab-2_1-From-Linear-to-Neural/blob/main/instructor-guide.md)
+Refer: [Lab Instructor Guide](https://github.com/ga-curriculum/lab-2-1-from-linear-to-neural/blob/main/instructor-guide.md)
 
 ---
 

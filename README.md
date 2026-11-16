@@ -294,7 +294,7 @@ sequenceDiagram
 
 **Objective:** "From Linear to Neural" - Replace logistic regression with a simple feedforward neural network using PyTorch.
 
-> Refer: https://git.generalassemb.ly/applied-ai-and-deep-learning-in-action/Lab-2_1-From-Linear-to-Neural
+> Refer: https://github.com/ga-curriculum/lab-2-1-from-linear-to-neural
 >  
 
 
